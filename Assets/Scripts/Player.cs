@@ -7,10 +7,14 @@ public class Player : MonoBehaviour
     public float forwardSpeed = 5f;
     public float jumpHeight = 1.2f;
     private Vector3 playerVelocity;
+    private PlayerState state;
     private CharacterController charController;
+    public Animator animator;
     void Start()
     {
         charController = GetComponent<CharacterController>();
+        animator = GetComponent<Animator>();
+        SetState(PlayerState.Iddle);
     }
 
     void Update()
@@ -26,8 +30,15 @@ public class Player : MonoBehaviour
             //Establecemos la velocidad de salto necesaria para alcanzar la altura
             //definida en jumpHeight
             playerVelocity.y = Mathf.Sqrt(jumpHeight * -2 * Physics.gravity.y);
+            SetState(PlayerState.Jump);
         }
-
+        if (!charController.isGrounded)
+        {
+            if (playerVelocity.y < 0)
+            {
+                SetState(PlayerState.Fall);
+            }
+        }
         //Gestión de movimiento
         playerVelocity.x = movementInput.x * forwardSpeed;
         playerVelocity.z = movementInput.z * forwardSpeed;
@@ -37,13 +48,44 @@ public class Player : MonoBehaviour
 
         //Aplicamos el movimiento
         charController.Move(playerVelocity * Time.deltaTime);
+
+        if (charController.isGrounded)
+        {
+            if ((Mathf.Abs(playerVelocity.x) > 0 || Mathf.Abs(playerVelocity.z) > 0))
+            {
+                SetState(PlayerState.Run);
+            }
+            else
+            {
+                SetState(PlayerState.Iddle);
+            }
+        }
+
+
+    }
+    void SetState(PlayerState newState)
+    {
+        if (state != newState)
+        {
+            state = newState;
+            AnimatorClearTriggers();
+            animator.SetTrigger($"{state}");
+        }
+    }
+
+    void AnimatorClearTriggers()
+    {
+        animator.ResetTrigger("Iddle");
+        animator.ResetTrigger("Run");
+        animator.ResetTrigger("Jump");
+        animator.ResetTrigger("Fall");
     }
 }
 
 public enum PlayerState
 {
-    Idle,
+    Iddle,
     Run,
-    Jump, 
+    Jump,
     Fall
 }
