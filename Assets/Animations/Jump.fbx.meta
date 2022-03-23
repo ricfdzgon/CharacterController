@@ -1,37 +1,12 @@
 fileFormatVersion: 2
-guid: bf1cd0969c4d2f74f858f3bfdf608b5d
+guid: e7854e666b4a7714a810bc0e4793d09c
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable:
   - first:
       74: -203655887218126122
     second: mixamo.com
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Ch46_body
-    second: {fileID: 2100000, guid: 8456d7e9a85e02642bdeaff330b08d91, type: 2}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: Ch46_1001_Diffuse
-    second: {fileID: 2800000, guid: 3b190f821f656b94083b537d233697e8, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: Ch46_1001_Glossiness
-    second: {fileID: 2800000, guid: 33218b58b9cb98a47a084d7aad10c693, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: Ch46_1001_Normal
-    second: {fileID: 2800000, guid: 5918107a3ef3062448a1135417cbb1c5, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: Ch46_1001_Specular
-    second: {fileID: 2800000, guid: aad54674bed151149b26a59266589f5a, type: 3}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
