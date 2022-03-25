@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public float cameraLerpSpeed = 20f;
     public float forwardSpeed = 5f;
     public float jumpHeight = 1.2f;
     public float mouseRotationSensitivity = 10;
@@ -13,6 +14,8 @@ public class Player : MonoBehaviour
     private CharacterController charController;
     public Animator animator;
     public Transform cameraMount;
+    public Transform camerHorizontalFront;
+    public Transform cameraHorizontalBack;
     void Start()
     {
         charController = GetComponent<CharacterController>();
@@ -21,6 +24,14 @@ public class Player : MonoBehaviour
         if (cameraMount == null)
         {
             Debug.Log("Player.Start CameraMount no inicializado");
+        }
+        if (camerHorizontalFront == null)
+        {
+            Debug.Log("Player.Start camerHorizontalFront no inicializado");
+        }
+        if (cameraHorizontalBack == null)
+        {
+            Debug.Log("Player.Start cameraHorizontalBack no inicializado");
         }
     }
 
@@ -32,6 +43,8 @@ public class Player : MonoBehaviour
         Vector2 mouseInput = Vector2.zero;
         mouseInput.x = Input.GetAxisRaw("Mouse X");
         mouseInput.y = -Input.GetAxisRaw("Mouse Y");
+
+        float mouseScroll = Input.GetAxisRaw("Mouse ScrollWheel");
 
         movementInput = transform.TransformDirection(movementInput);
 
@@ -64,7 +77,18 @@ public class Player : MonoBehaviour
         cameraVerticalRotation = Mathf.Clamp(cameraVerticalRotation, -20, 90);
         cameraMount.localEulerAngles = Vector3.right * cameraVerticalRotation;
 
-        //cameraMount.Rotate(Vector3.right * rotationSpeed * Time.deltaTime * mouseInput.y * mouseRotationSensitivity);
+        //Movimiento horizontal de la cámara
+        Transform camera = Camera.main.transform;
+        if (mouseScroll > 0)
+        {
+           // camera.Translate(Vector3.Lerp(camera.position, camerHorizontalFront.position, cameraLerpSpeed * Time.deltaTime), Space.Self);
+            camera.position = Vector3.Lerp(camera.position, camerHorizontalFront.position, cameraLerpSpeed * Time.deltaTime);
+        }
+        else if (mouseScroll < 0)
+        {
+           // camera.Translate(Vector3.Lerp(camera.position, cameraHorizontalBack.position, cameraLerpSpeed * Time.deltaTime), Space.Self);
+            camera.position = Vector3.Lerp(camera.position, cameraHorizontalBack.position, cameraLerpSpeed * Time.deltaTime);
+        }
 
         //Gestión de movimiento
         playerVelocity.x = movementInput.x * forwardSpeed;
