@@ -4,24 +4,26 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [Header("Movimiento Horizontal")]
     public float forwardSpeed = 5f;
-    public float jumpHeight = 1.2f;
+
+    [Header("Movimiento Rotacion")]
     public float mouseRotationSensitivity = 10;
     private float rotationSpeed = 200f;
+
+    [Header("Salto")]
+    public float jumpHeight = 1.2f;
+    
+    [Header("Componentes")]
     private Vector3 playerVelocity;
     private PlayerState state;
     private CharacterController charController;
     public Animator animator;
-    public Transform cameraMount;
     void Start()
     {
         charController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         SetState(PlayerState.Iddle);
-        if (cameraMount == null)
-        {
-            Debug.Log("Player.Start CameraMount no inicializado");
-        }
     }
 
     void Update()
@@ -31,7 +33,6 @@ public class Player : MonoBehaviour
         Vector3 movementInput = Input.GetAxisRaw("Vertical") * Vector3.forward;
         Vector2 mouseInput = Vector2.zero;
         mouseInput.x = Input.GetAxisRaw("Mouse X");
-        mouseInput.y = -Input.GetAxisRaw("Mouse Y");
 
         movementInput = transform.TransformDirection(movementInput);
 
@@ -53,16 +54,6 @@ public class Player : MonoBehaviour
         //Gestión de rotación
         //Rotación del personaje en el plano horizontal
         transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime * mouseInput.x * mouseRotationSensitivity);
-
-        //Rotación de la cámara en el plano vertical
-        float cameraVerticalRotation = cameraMount.localEulerAngles.x;
-        cameraVerticalRotation += rotationSpeed * Time.deltaTime * mouseInput.y * mouseRotationSensitivity;
-        if (cameraVerticalRotation > 180)
-        {
-            cameraVerticalRotation -= 360;
-        }
-        cameraVerticalRotation = Mathf.Clamp(cameraVerticalRotation, -20, 90);
-        cameraMount.localEulerAngles = Vector3.right * cameraVerticalRotation;
 
         //Gestión de movimiento
         playerVelocity.x = movementInput.x * forwardSpeed;
