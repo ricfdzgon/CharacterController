@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class CameraHorizontalMovement : MonoBehaviour
 {
+    public bool intermediatePositionsAllowed = true;
     public float cameraLerpSpeed = 20f;
+    public float mouseScrollSensitivity = 1000f;
     public Transform camerHorizontalFront;
     public Transform cameraHorizontalBack;
     private Vector3 cameraTargetPosition;
@@ -26,16 +28,23 @@ public class CameraHorizontalMovement : MonoBehaviour
         //Gestión de Inputs
         float mouseScroll = Input.GetAxisRaw("Mouse ScrollWheel");
 
-        //Movimiento horizontal de la cámara
-        Transform camera = Camera.main.transform;
-        if (mouseScroll > 0)
+        if (intermediatePositionsAllowed)
         {
-            cameraTargetPosition = camerHorizontalFront.localPosition;
+            cameraTargetPosition.z += mouseScroll * mouseScrollSensitivity * Time.deltaTime;
+            cameraTargetPosition.z = Mathf.Clamp(cameraTargetPosition.z, cameraHorizontalBack.localPosition.z, camerHorizontalFront.localPosition.z);
         }
-        else if (mouseScroll < 0)
+        else
         {
-            cameraTargetPosition = cameraHorizontalBack.localPosition;
+            //Movimiento horizontal de la cámara
+            if (mouseScroll > 0)
+            {
+                cameraTargetPosition = camerHorizontalFront.localPosition;
+            }
+            else if (mouseScroll < 0)
+            {
+                cameraTargetPosition = cameraHorizontalBack.localPosition;
+            }
         }
-        camera.localPosition = Vector3.Lerp(camera.localPosition, cameraTargetPosition, cameraLerpSpeed * Time.deltaTime);
+        transform.localPosition = Vector3.Lerp(transform.localPosition, cameraTargetPosition, cameraLerpSpeed * Time.deltaTime);
     }
 }

@@ -1143,7 +1143,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d958cb972da7cfa47abea4073d449040, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  intermediatePositionsAllowed: 1
   cameraLerpSpeed: 5
+  mouseScrollSensitivity: 1000
   camerHorizontalFront: {fileID: 22472562}
   cameraHorizontalBack: {fileID: 1959708829}
 --- !u!1 &1189087154
