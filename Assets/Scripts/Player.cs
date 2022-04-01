@@ -13,12 +13,13 @@ public class Player : MonoBehaviour
 
     [Header("Salto")]
     public float jumpHeight = 1.2f;
-    
+
     [Header("Componentes")]
     private Vector3 playerVelocity;
     private PlayerState state;
     private CharacterController charController;
     public Animator animator;
+    private GameObject holdingObject = null;
     void Start()
     {
         charController = GetComponent<CharacterController>();
@@ -76,6 +77,44 @@ public class Player : MonoBehaviour
                 SetState(PlayerState.Iddle);
             }
         }
+
+        //Gestion de interacciones
+        if (Input.GetButtonUp("Interaction"))
+        {
+            if (holdingObject == null)
+            {
+                PickObject();
+            }
+            else
+            {
+                DropObject();
+            }
+        }
+    }
+
+    private void PickObject()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position + transform.up * 0.7f, transform.forward, out hit, 1))
+        {
+            if (hit.transform.gameObject.CompareTag("Pickable"))
+            {
+                Debug.Log("Player.PickObject Tengo algo pickable delante de mi");
+                //Cogemos el objeto
+                holdingObject = hit.transform.gameObject;
+                holdingObject.transform.parent = transform;
+                holdingObject.transform.localPosition = new Vector3(0, 0.6f, 0.5f);
+                holdingObject.transform.localEulerAngles = Vector3.zero;
+                holdingObject.GetComponent<Rigidbody>().isKinematic = true;
+            }
+        }
+    }
+
+    private void DropObject()
+    {
+        holdingObject.transform.parent = null;
+        holdingObject.GetComponent<Rigidbody>().isKinematic = false;
+        holdingObject = null;
     }
     void SetState(PlayerState newState)
     {
