@@ -90,6 +90,15 @@ public class Player : MonoBehaviour
                 DropObject();
             }
         }
+        if (Input.GetButtonDown("Force"))
+        {
+            ApplyForce();
+        }
+    }
+
+    private void ApplyForce()
+    {   
+
     }
 
     private void PickObject()
