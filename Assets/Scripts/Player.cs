@@ -14,6 +14,9 @@ public class Player : MonoBehaviour
     [Header("Fuerza")]
     public float hitForce = 10f;
 
+    public float explosionForce = 100f;
+    public float explosionRadius = 5f;
+
     [Header("Salto")]
     public float jumpHeight = 1.2f;
 
@@ -97,6 +100,24 @@ public class Player : MonoBehaviour
         {
             ApplyForce();
         }
+        if (Input.GetButtonDown("Explosion"))
+        {
+            ApplyExplosion();
+
+        }
+    }
+
+    private void ApplyExplosion()
+    {
+        Collider[] afectedObjects = Physics.OverlapSphere(transform.position, explosionRadius);
+        foreach (Collider c in afectedObjects)
+        {
+            Rigidbody rb = c.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.AddExplosionForce(explosionForce, transform.position, explosionRadius, 1, ForceMode.VelocityChange);
+            }
+        }
     }
 
     private void ApplyForce()
@@ -123,7 +144,7 @@ public class Player : MonoBehaviour
                 //Cogemos el objeto
                 holdingObject = hit.transform.gameObject;
                 holdingObject.transform.parent = transform;
-                holdingObject.transform.localPosition = new Vector3(0, 0.6f, 0.8f);
+                holdingObject.transform.localPosition = new Vector3(0, 0.6f, 0.65f);
                 holdingObject.transform.localEulerAngles = Vector3.zero;
                 holdingObject.GetComponent<Rigidbody>().isKinematic = true;
             }
