@@ -11,6 +11,9 @@ public class Player : MonoBehaviour
     public float mouseRotationSensitivity = 10;
     private float rotationSpeed = 200f;
 
+    [Header("Fuerza")]
+    public float hitForce = 10f;
+
     [Header("Salto")]
     public float jumpHeight = 1.2f;
 
@@ -97,8 +100,16 @@ public class Player : MonoBehaviour
     }
 
     private void ApplyForce()
-    {   
-
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position + transform.up * 0.7f, transform.forward, out hit, 1))
+        {
+            Rigidbody rb = hit.transform.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.AddForce(transform.forward * hitForce, ForceMode.Impulse);
+            }
+        }
     }
 
     private void PickObject()
@@ -112,7 +123,7 @@ public class Player : MonoBehaviour
                 //Cogemos el objeto
                 holdingObject = hit.transform.gameObject;
                 holdingObject.transform.parent = transform;
-                holdingObject.transform.localPosition = new Vector3(0, 0.6f, 0.5f);
+                holdingObject.transform.localPosition = new Vector3(0, 0.6f, 0.8f);
                 holdingObject.transform.localEulerAngles = Vector3.zero;
                 holdingObject.GetComponent<Rigidbody>().isKinematic = true;
             }
