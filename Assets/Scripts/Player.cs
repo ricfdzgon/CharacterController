@@ -174,6 +174,22 @@ public class Player : MonoBehaviour
         animator.ResetTrigger("Jump");
         animator.ResetTrigger("Fall");
     }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Plataforma"))
+        {
+            transform.parent = other.transform;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Plataforma"))
+        {
+            transform.parent = null;
+        }
+    }
 }
 
 public enum PlayerState
