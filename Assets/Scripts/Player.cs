@@ -69,12 +69,12 @@ public class Player : MonoBehaviour
             playerVelocity.z = movementInput.z * forwardSpeed;
         }
         else
-        {
+        {/*
             playerVelocity.x += movementInput.x * forwardSpeed;
             playerVelocity.x = Mathf.Clamp(playerVelocity.x, -forwardSpeed, forwardSpeed);
             playerVelocity.z += movementInput.z * forwardSpeed;
             playerVelocity.z = Mathf.Clamp(playerVelocity.z, -forwardSpeed, forwardSpeed);
-
+*/
         }
 
         //Gestión de  gravedad
