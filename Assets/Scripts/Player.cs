@@ -63,8 +63,19 @@ public class Player : MonoBehaviour
         transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime * mouseInput.x * mouseRotationSensitivity);
 
         //Gestión de movimiento
-        playerVelocity.x = movementInput.x * forwardSpeed;
-        playerVelocity.z = movementInput.z * forwardSpeed;
+        if (charController.isGrounded)
+        {
+            playerVelocity.x = movementInput.x * forwardSpeed;
+            playerVelocity.z = movementInput.z * forwardSpeed;
+        }
+        else
+        {
+            playerVelocity.x += movementInput.x * forwardSpeed;
+            playerVelocity.x = Mathf.Clamp(playerVelocity.x, -forwardSpeed, forwardSpeed);
+            playerVelocity.z += movementInput.z * forwardSpeed;
+            playerVelocity.z = Mathf.Clamp(playerVelocity.z, -forwardSpeed, forwardSpeed);
+
+        }
 
         //Gestión de  gravedad
         playerVelocity.y += Physics.gravity.y * Time.deltaTime;
@@ -188,6 +199,11 @@ public class Player : MonoBehaviour
         if (other.gameObject.CompareTag("Plataforma"))
         {
             transform.parent = null;
+            Speedometer speedometer = other.GetComponent<Speedometer>();
+            if (speedometer != null)
+            {
+                playerVelocity += speedometer.velocity;
+            }
         }
     }
 }
