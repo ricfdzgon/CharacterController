@@ -85,7 +85,11 @@ public class CameraHorizontalMovement : MonoBehaviour
                 if (hit.collider.gameObject.CompareTag("Wall"))
                 {
                     //Acercamos la cámara a Amy lo máximo posible
-
+                    float maxCameraDistance = Vector3.Distance(playerHead.position, hit.point) - 0.5f;
+                    if (cameraTargetPosition.z < -maxCameraDistance)
+                    {
+                        cameraTargetPosition.z = -maxCameraDistance;
+                    }
                 }
             }
         }
