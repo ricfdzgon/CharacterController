@@ -1024,12 +1024,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pivot: {x: 0, y: 1.2, z: 0}
+  screenDisplacement: {x: 0.8, y: 0.5}
   target: {fileID: 1652138913}
   scrollSensitivity: 100
   scrollSpeed: 5
   minDistance: 1
   maxDistance: 6
   defaultDistance: 3
+  rotationSensitivity: 8
+  rotationSpeed: 90
+  topAngleLimit: 60
+  lowAngleLimit: 0
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
