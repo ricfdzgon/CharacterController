@@ -986,6 +986,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 638357584}
+  - component: {fileID: 638357585}
   m_Layer: 0
   m_Name: CameraMount
   m_TagString: Untagged
@@ -1010,6 +1011,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &638357585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 638357583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bb3cf481f02d074da5aa223b45324c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pivot: {x: 0, y: 1.2, z: 0}
+  target: {fileID: 1652138913}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -2878,6 +2893,7 @@ GameObject:
   - component: {fileID: 1652138913}
   - component: {fileID: 1652138914}
   - component: {fileID: 1652138916}
+  - component: {fileID: 1652138915}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -2919,6 +2935,18 @@ CharacterController:
   m_SkinWidth: 0.02
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.7, z: 0}
+--- !u!114 &1652138915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1652138912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f70d1406385e8d498aeedd7cae8dc7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!95 &1652138916
 Animator:
   serializedVersion: 3
