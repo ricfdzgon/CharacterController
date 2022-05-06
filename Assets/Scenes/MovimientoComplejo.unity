@@ -2904,6 +2904,7 @@ GameObject:
   - component: {fileID: 1652138914}
   - component: {fileID: 1652138916}
   - component: {fileID: 1652138915}
+  - component: {fileID: 1652138917}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -2958,6 +2959,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
+  rotationLerpSpeed: 20
 --- !u!95 &1652138916
 Animator:
   serializedVersion: 3
@@ -2977,6 +2979,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1652138917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1652138912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 307d6018ed2372b4488f9b4d7342c17f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  velocity: {x: 0, y: 0, z: 0}
+  speed: 0
 --- !u!1 &1840312897
 GameObject:
   m_ObjectHideFlags: 0
