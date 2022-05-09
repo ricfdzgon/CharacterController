@@ -1718,7 +1718,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPoint: {fileID: 1358027548}
   endPoint: {fileID: 1387126600}
-  travelTime: 2
+  travelTime: 3
 --- !u!65 &1046143838
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1726,7 +1726,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1046143834}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 14799e8ae76eeb144b755cf376f9bc69, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -3009,6 +3009,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 5
   jumpHeight: 2
+  rotationLerpSpeed: 20
 --- !u!1 &1840312897
 GameObject:
   m_ObjectHideFlags: 0
