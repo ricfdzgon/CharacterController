@@ -44,5 +44,30 @@ public class AmyMovement : MonoBehaviour
 
         //Orientamos a Amy en la dirección de movimiento
         transform.forward = Vector3.Lerp(transform.forward, movementInput, rotationLerpSpeed * Time.deltaTime);
+
+        //Cuando el usuario hace click con el ratón, averiguamos en que punto del mundo
+        //está haciendo click, y dependiendo que haya en ese punto, hacemos una u otra cosa
+        if (Input.GetMouseButtonDown(0))
+        {
+            RaycastHit raycastHit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Physics.Raycast(ray, out raycastHit, 1000f);
+
+            if (raycastHit.collider.gameObject.CompareTag("Ground"))
+            {
+                GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                float size = Random.Range(0.25f, 1f);
+                sphere.transform.localScale = new Vector3(size, size, size);
+                sphere.transform.position = new Vector3(raycastHit.point.x, raycastHit.point.y + size / 2, raycastHit.point.z);
+                sphere.AddComponent<Rigidbody>();
+            }
+            if (raycastHit.collider.GetComponent<Rigidbody>() != null)
+            {
+                raycastHit.collider.GetComponent<Rigidbody>().AddForce((raycastHit.collider.transform.position - Camera.main.transform.position).normalized * 10f, ForceMode.Impulse);
+            }
+
+        }
+
+
     }
 }

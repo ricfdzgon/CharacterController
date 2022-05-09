@@ -8,6 +8,7 @@ TagManager:
   - Plataforma
   - Obstacle
   - Wall
+  - Ground
   layers:
   - Default
   - TransparentFX
