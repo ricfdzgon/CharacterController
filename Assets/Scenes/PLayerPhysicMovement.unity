@@ -1293,7 +1293,7 @@ GameObject:
   - component: {fileID: 785424379}
   - component: {fileID: 785424378}
   - component: {fileID: 785424377}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Suelo
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -3010,6 +3010,10 @@ MonoBehaviour:
   movementSpeed: 5
   jumpHeight: 2
   rotationLerpSpeed: 20
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 64
+  jumpSpeed: 0
 --- !u!1 &1840312897
 GameObject:
   m_ObjectHideFlags: 0
