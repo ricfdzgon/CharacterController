@@ -12,9 +12,9 @@ public class Speedometer : MonoBehaviour
         previousPosition = transform.position;
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        velocity = (transform.position - previousPosition) / Time.deltaTime;
+        velocity = (transform.position - previousPosition) / Time.fixedDeltaTime;
         speed = velocity.magnitude;
 
         previousPosition = transform.position;
