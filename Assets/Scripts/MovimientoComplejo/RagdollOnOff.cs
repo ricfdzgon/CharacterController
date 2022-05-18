@@ -32,4 +32,9 @@ public class RagdollOnOff : MonoBehaviour
 
         ragdollActivated = active;
     }
+
+    public bool IsRagdollActive()
+    {
+        return ragdollActivated;
+    }
 }

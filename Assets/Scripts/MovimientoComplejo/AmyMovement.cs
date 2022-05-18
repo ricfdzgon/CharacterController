@@ -9,6 +9,7 @@ public class AmyMovement : MonoBehaviour
     private Vector3 playerVelocity = Vector3.zero;
     private CharacterController charController;
     public float rotationLerpSpeed = 20f;
+    private RagdollOnOff ragdollOnOff;
     void Start()
     {
         charController = GetComponent<CharacterController>();
@@ -16,23 +17,48 @@ public class AmyMovement : MonoBehaviour
         //Esto es para en modo Play que no se escape el ratón por ahí
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.lockState = CursorLockMode.Confined;
+        ragdollOnOff = GetComponent<RagdollOnOff>();
     }
 
     void Update()
     {
-        //Leer las entradas del jugador
-        Vector3 movementInput = Vector3.zero;
-        movementInput.x = Input.GetAxis("Horizontal");
-        movementInput.z = Input.GetAxis("Vertical");
+        if (!ragdollOnOff.IsRagdollActive())
+        {
+            //Leer las entradas del jugador
+            Vector3 movementInput = Vector3.zero;
+            movementInput.x = Input.GetAxis("Horizontal");
+            movementInput.z = Input.GetAxis("Vertical");
 
-        movementInput = Camera.main.transform.TransformDirection(movementInput);
+            movementInput = Camera.main.transform.TransformDirection(movementInput);
 
-        movementInput.y = 0;
-        movementInput = movementInput.normalized;
+            movementInput.y = 0;
+            movementInput = movementInput.normalized;
 
-        playerVelocity.x = movementInput.x * speed;
-        playerVelocity.z = movementInput.z * speed;
+            playerVelocity.x = movementInput.x * speed;
+            playerVelocity.z = movementInput.z * speed;
 
+            //Orientamos a Amy en la dirección de movimiento
+            // Primero comprobamos si los vectores transform.forward y movementInput son opuestos
+            //Lo que significa que su producto vectorial es 0 y su producto escalar es negativo
+            float lerpCorrection = 1;
+
+            if (Vector3.Cross(transform.forward, movementInput).magnitude < 0.01f && Vector3.Dot(transform.forward, movementInput) < 0)
+            {
+                transform.forward = transform.forward + transform.right * 0.01f;
+                lerpCorrection = 0.25f;
+            }
+
+            transform.forward = Vector3.Lerp(transform.forward, movementInput, rotationLerpSpeed * lerpCorrection * Time.deltaTime);
+
+        }
+        else
+        {
+            //Si se activa la Ragdoll ponemos la velocidad horizontal a 0
+            playerVelocity.x = 0;
+            playerVelocity.z = 0;
+        }
+
+        
         if (charController.isGrounded)
         {
             playerVelocity.y = 0;
@@ -41,19 +67,6 @@ public class AmyMovement : MonoBehaviour
         playerVelocity.y += Physics.gravity.y * Time.deltaTime;
 
         charController.Move(playerVelocity * Time.deltaTime);
-
-        //Orientamos a Amy en la dirección de movimiento
-        // Primero comprobamos si los vectores transform.forward y movementInput son opuestos
-        //Lo que significa que su producto vectorial es 0 y su producto escalar es negativo
-        float lerpCorrection = 1;
-
-        if (Vector3.Cross(transform.forward, movementInput).magnitude < 0.01f && Vector3.Dot(transform.forward, movementInput) < 0)
-        {
-            transform.forward = transform.forward + transform.right * 0.01f;
-            lerpCorrection = 0.25f;
-        }
-
-        transform.forward = Vector3.Lerp(transform.forward, movementInput, rotationLerpSpeed * lerpCorrection * Time.deltaTime);
 
         //Cuando el usuario hace click con el ratón, averiguamos en que punto del mundo
         //está haciendo click, y dependiendo que haya en ese punto, hacemos una u otra cosa
